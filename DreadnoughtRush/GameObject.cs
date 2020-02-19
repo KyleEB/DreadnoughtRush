@@ -96,11 +96,13 @@ namespace DreadnoughtRush
             camera = Game.Services.GetService<Camera>();
             foreach (BasicEffect effect in mesh.Effects)
             {
-                effect.Alpha = 0.7f;
+                effect.Alpha = 1f;
                 effect.EnableDefaultLighting();
+               
                 effect.PreferPerPixelLighting = true;
 
-                effect.World = ConversionHelper.MathConverter.Convert(physicsObject.WorldTransform);
+
+                effect.World = this.TranformationMatrix;
 
                 effect.View = ConversionHelper.MathConverter.Convert(camera.ViewMatrix);
 

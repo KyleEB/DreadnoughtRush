@@ -29,6 +29,9 @@ namespace DreadnoughtRush
         public DreadnoughtRush()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1920;  //Setting Width/Height to standard 1920 by 1080p view 
+            graphics.PreferredBackBufferHeight = 1080;   
+            graphics.ApplyChanges();
             Content.RootDirectory = "Content";
         }
 
@@ -66,17 +69,7 @@ namespace DreadnoughtRush
         }
 
 
-        private Ship InitializePlayer()
-        {
-            Vector3 PlayerPos = new Vector3(2, 0, -5);
-            string PlayerId = "Player";
-            float PlayerMass = 3f;
-            Vector3 PlayerLinearMomentum = new Vector3(-0.2f, 0, 0);
-            Vector3 PlayerAngularMomentum = new Vector3(-0.5f, -0.6f, 0.2f);
-
-
-            return new Ship(this, PlayerPos, PlayerId, PlayerMass, PlayerLinearMomentum, PlayerAngularMomentum);
-        }
+        
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
