@@ -18,6 +18,7 @@ namespace DreadnoughtRush
         Ship PlayerShip;
         Asteroid asteroid;
 
+        InputController Controller = new KeyboardInputController();
 
         private bool FirstPerson = false;
 
@@ -97,11 +98,6 @@ namespace DreadnoughtRush
                 localLookAt = new Vector3(0, 1, 10);
             }
 
-            
-            
-            
-
-
 
             Vector3 worldCamera = Vector3.Transform(localCamera, chase.TranformationMatrix);
             Vector3 worldLookAt = Vector3.Transform(localLookAt, chase.TranformationMatrix);
@@ -137,10 +133,11 @@ namespace DreadnoughtRush
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+
+            if (Controller.shouldExit())
                 Exit();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (Controller.changePerspective())
             {
                 if (FirstPersonToggleTimeout < 0) 
                 {
@@ -154,7 +151,7 @@ namespace DreadnoughtRush
                     
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.O))
+            if (Controller.lockOrientation())
             {
                 if (FirstPersonToggleTimeout < 0)
                 {
@@ -184,5 +181,6 @@ namespace DreadnoughtRush
             GraphicsDevice.Clear(Color.Black);
             base.Draw(gameTime);
         }
+
     }
 }
