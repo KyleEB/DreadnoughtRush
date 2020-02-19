@@ -24,6 +24,8 @@ namespace DreadnoughtRush
 
         public Ship(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum, Vector3 angMomentum) : base(game, pos, id, mass, linMomentum, angMomentum)
         {
+            physicsObject.AngularDamping = 0.1f;
+            physicsObject.LinearDamping = 0.1f;
         }
 
         public override void Initialize()

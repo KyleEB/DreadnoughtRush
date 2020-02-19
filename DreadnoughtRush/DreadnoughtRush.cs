@@ -24,7 +24,7 @@ namespace DreadnoughtRush
 
         private double FirstPersonToggleTimeout = 1;
 
-        private bool CameraRotationLocked = true;
+        private bool CameraRotationLocked = false;
 
         public DreadnoughtRush()
         {
@@ -51,10 +51,31 @@ namespace DreadnoughtRush
             // that represents the asteroid.
 
             asteroid = new Asteroid(this, new Vector3(-2, 0, -5), "A", 2, new Vector3(0.2f, 0, 0), new Vector3(0.3f, 0.5f, 0.5f));
-            PlayerShip = new Ship(this, new Vector3(2, 0, -5), "Player", 3, new Vector3(-0.2f, 0, 0), new Vector3(-0.5f, -0.6f, 0.2f));
+
+            Vector3 PlayerPos = new Vector3(2, 0, -5);
+            string PlayerId = "Player";
+            float PlayerMass = 3f;
+            Vector3 PlayerLinearMomentum = new Vector3(-0.2f, 0, 0);
+            Vector3 PlayerAngularMomentum = new Vector3(-0.5f, -0.6f, 0.2f);
+
+
+            PlayerShip = InitializePlayer();
 
 
             base.Initialize();
+        }
+
+
+        private Ship InitializePlayer()
+        {
+            Vector3 PlayerPos = new Vector3(2, 0, -5);
+            string PlayerId = "Player";
+            float PlayerMass = 3f;
+            Vector3 PlayerLinearMomentum = new Vector3(-0.2f, 0, 0);
+            Vector3 PlayerAngularMomentum = new Vector3(-0.5f, -0.6f, 0.2f);
+
+
+            return new Ship(this, PlayerPos, PlayerId, PlayerMass, PlayerLinearMomentum, PlayerAngularMomentum);
         }
 
         /// <summary>
