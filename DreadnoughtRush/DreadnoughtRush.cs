@@ -23,6 +23,8 @@ namespace DreadnoughtRush
 
         private double FirstPersonToggleTimeout = 1;
 
+        private bool CameraRotationLocked = true;
+
         public DreadnoughtRush()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -94,7 +96,12 @@ namespace DreadnoughtRush
                 localCamera = new Vector3(0, 2, -20);
                 localLookAt = new Vector3(0, 1, 10);
             }
+
             
+            
+            
+
+
 
             Vector3 worldCamera = Vector3.Transform(localCamera, chase.TranformationMatrix);
             Vector3 worldLookAt = Vector3.Transform(localLookAt, chase.TranformationMatrix);
@@ -103,7 +110,16 @@ namespace DreadnoughtRush
 
             camera.ViewDirection = ConversionHelper.MathConverter.Convert(worldLookAt) - camera.Position;
 
-            camera.LockedUp = ConversionHelper.MathConverter.Convert(Vector3.Transform(Vector3.Up, chase.RotationMatrix));            
+            if (CameraRotationLocked)
+            {
+                camera.LockedUp = ConversionHelper.MathConverter.Convert(Vector3.Transform(Vector3.Up, chase.RotationMatrix));
+            }
+            else
+            {
+                camera.LockedUp = ConversionHelper.MathConverter.Convert(Vector3.Up);
+            }
+
+              
         }
 
         /// <summary>
@@ -136,6 +152,20 @@ namespace DreadnoughtRush
                    FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
                 }
                     
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.O))
+            {
+                if (FirstPersonToggleTimeout < 0)
+                {
+                    CameraRotationLocked = !CameraRotationLocked;
+                    FirstPersonToggleTimeout = 1;
+                }
+                else
+                {
+                    FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
+                }
+
             }
 
 
