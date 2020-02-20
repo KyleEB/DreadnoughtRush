@@ -47,19 +47,21 @@ namespace DreadnoughtRush
 
             // Make our BEPU Physics space a service
             Services.AddService<Space>(new Space());
-            
+
 
             // Create two asteroids.  Note that asteroids automatically add themselves to
             // as a DrawableGameComponent as well as add an object into Bepu physics
             // that represents the asteroid.
 
-            asteroid = new Asteroid(this, new Vector3(-2, 0, -5), "A", 2, new Vector3(0.2f, 0, 0), new Vector3(0.3f, 0.5f, 0.5f));
 
-            Vector3 PlayerPos = new Vector3(2, 0, -5);
-            string PlayerId = "Player";
-            float PlayerMass = 3f;
-            Vector3 PlayerLinearMomentum = new Vector3(-0.2f, 0, 0);
-            Vector3 PlayerAngularMomentum = new Vector3(-0.5f, -0.6f, 0.2f);
+            Vector3 AsteroidPos = new Vector3(0, 0, 10);
+            string AsteroidId = "Asteroid";
+            float AsteroidMass = 3f;
+            Vector3 AsteroidLinearMomentum = new Vector3(0f, 0f, 0f);
+            Vector3 AsteroidAngularMomentum = new Vector3(0f, 0f, 0f);
+
+
+            asteroid = new Asteroid(this, AsteroidPos, AsteroidId, AsteroidMass, AsteroidLinearMomentum, AsteroidAngularMomentum);
 
 
             PlayerShip = InitializePlayer();
@@ -68,6 +70,17 @@ namespace DreadnoughtRush
             base.Initialize();
         }
 
+
+        private Ship InitializePlayer()
+        {
+            Vector3 PlayerPos = new Vector3(0f, -1f, -5f);
+            string PlayerId = "Player";
+            float PlayerMass = 3f;
+            Vector3 PlayerLinearMomentum = new Vector3(0f, 0f, 2f);
+            Vector3 PlayerAngularMomentum = new Vector3(0f, 0f, 0f);
+
+            return new Ship(this, PlayerPos, PlayerId, PlayerMass, PlayerLinearMomentum, PlayerAngularMomentum);
+        }
 
         
 
@@ -153,37 +166,96 @@ namespace DreadnoughtRush
 
             if (Controller.changePerspective())
             {
-                if (FirstPersonToggleTimeout < 0) 
-                {
-                    FirstPerson = !FirstPerson;
-                    FirstPersonToggleTimeout = 1;
-                }                    
-                else
-                {
-                   FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
-                }
-                    
+                togglePerspective(gameTime);
+
             }
 
             if (Controller.lockOrientation())
             {
-                if (FirstPersonToggleTimeout < 0)
-                {
-                    CameraRotationLocked = !CameraRotationLocked;
-                    FirstPersonToggleTimeout = 1;
-                }
-                else
-                {
-                    FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
-                }
-
+                toggleOrientationLock(gameTime);
             }
+
+            if (Controller.forwardThrust())
+            {
+                PlayerShip.ApplyForwardThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+            if (Controller.backwardThrust())
+            {
+                PlayerShip.ApplyBackwardThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+            if (Controller.PositiveYawThrust())
+            {
+                PlayerShip.ApplyPositiveYawThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+            if (Controller.NegativeYawThrust())
+            {
+                PlayerShip.ApplyNegativeYawThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+            if(Controller.PostivePitchThrust())
+            {
+                PlayerShip.ApplyPositivePitchThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+            if (Controller.NegativePitchThrust())
+            {
+                PlayerShip.ApplyNegativePitchThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+            if (Controller.PositiveRollThrust())
+            {
+                PlayerShip.ApplyPositiveRollThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+            if (Controller.NegativeRollThrust())
+            {
+                PlayerShip.ApplyNegativeRollThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+            if (Controller.AngularDampeners())
+            {
+                PlayerShip.ApplyAngularDampeners();
+            } else
+            {
+                PlayerShip.ReleaseAngularDampeners();
+            }
+
+
 
 
             Services.GetService<Space>().Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             UpdateChaseObject(PlayerShip);
 
             base.Update(gameTime);
+        }
+
+        private void toggleOrientationLock(GameTime gameTime)
+        {
+            if (FirstPersonToggleTimeout < 0)
+            {
+                CameraRotationLocked = !CameraRotationLocked;
+                FirstPersonToggleTimeout = 1;
+            }
+            else
+            {
+                FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
+            }
+        }
+
+        private void togglePerspective(GameTime gameTime)
+        {
+            if (FirstPersonToggleTimeout < 0)
+            {
+                FirstPerson = !FirstPerson;
+                FirstPersonToggleTimeout = 1;
+            }
+            else
+            {
+                FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
+            }
         }
 
         /// <summary>
