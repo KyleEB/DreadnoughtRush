@@ -23,7 +23,9 @@ namespace DreadnoughtRush
         /// This couples BePu and monogame together.
         /// </summary>
         
-        protected BEPUphysics.Entities.Prefabs.Sphere physicsObject;
+        public BEPUphysics.Entities.Prefabs.Sphere physicsObject;
+
+        public BEPUphysics.Entities.Entity entity => physicsObject;
 
         /// <summary>
         /// Third Person Point of View Camera that represents the Camera that resides behind the PlayerShip. 
@@ -61,7 +63,7 @@ namespace DreadnoughtRush
             Game.Services.GetService<Space>().Add(physicsObject);
         }
 
-        private void Events_InitialCollisionDetected(BEPUphysics.BroadPhaseEntries.MobileCollidables.EntityCollidable sender, BEPUphysics.BroadPhaseEntries.Collidable other, BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair)
+        protected virtual void Events_InitialCollisionDetected(BEPUphysics.BroadPhaseEntries.MobileCollidables.EntityCollidable sender, BEPUphysics.BroadPhaseEntries.Collidable other, BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair)
         {
             int i = 0;
         }

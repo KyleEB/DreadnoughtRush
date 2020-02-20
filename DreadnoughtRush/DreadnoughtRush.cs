@@ -16,7 +16,7 @@ namespace DreadnoughtRush
         SpriteBatch spriteBatch;
 
         Ship PlayerShip;
-        Asteroid asteroid;
+        Asteroid [] AsteroidField;
 
         InputController Controller = new KeyboardInputController();
 
@@ -29,7 +29,7 @@ namespace DreadnoughtRush
         public DreadnoughtRush()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1920;  //Setting Width/Height to standard 1920 by 1080p view 
+            graphics.PreferredBackBufferWidth = 1920;  //Setting Width/Height to standard 1920p by 1080p view 
             graphics.PreferredBackBufferHeight = 1080;   
             graphics.ApplyChanges();
             Content.RootDirectory = "Content";
@@ -49,11 +49,14 @@ namespace DreadnoughtRush
             Services.AddService<Space>(new Space());
 
 
-            // Create two asteroids.  Note that asteroids automatically add themselves to
-            // as a DrawableGameComponent as well as add an object into Bepu physics
-            // that represents the asteroid.
+            PlayerShip = InitializePlayer();
+            AsteroidField = InitializeAsteroidField(PlayerShip);
 
+            base.Initialize();
+        }
 
+        private Asteroid[] InitializeAsteroidField(GameObject trigger)
+        {
             Vector3 AsteroidPos = new Vector3(-250, -250, -250);
             string AsteroidId = "Asteroid";
             float AsteroidMass = 3f;
@@ -63,7 +66,8 @@ namespace DreadnoughtRush
             Random random = new Random();
 
             int asteroidCount = 1000;
-            for(int i = 0; i < asteroidCount; i++)
+            Asteroid[] TempAsteroidField = new Asteroid[asteroidCount];
+            for (int i = 0; i < asteroidCount; i++)
             {
                 float xPos = asteroidCount * (float)random.NextDouble();
                 float yPos = asteroidCount * (float)random.NextDouble();
@@ -81,17 +85,11 @@ namespace DreadnoughtRush
                 Vector3 randomRotation = new Vector3(xRotate, yRotate, zRotate);
                 Vector3 randomLinear = new Vector3(xLinear, yLinear, zLinear);
 
-
-                new Asteroid(this, AsteroidPos + randomPosition, AsteroidId, AsteroidMass, AsteroidLinearMomentum + randomLinear, AsteroidAngularMomentum + randomRotation);
+                 
+                TempAsteroidField[i] = new Asteroid(this, AsteroidPos + randomPosition, AsteroidId + i, AsteroidMass, AsteroidLinearMomentum + randomLinear, AsteroidAngularMomentum + randomRotation, trigger);
             }
-
-
-            PlayerShip = InitializePlayer();
-
-
-            base.Initialize();
+            return TempAsteroidField;
         }
-
 
         private Ship InitializePlayer()
         {
@@ -143,8 +141,8 @@ namespace DreadnoughtRush
                 localLookAt = new Vector3(0, 3, 10);
             } else
             {
-                localCamera = new Vector3(0, 10, -20);
-                localLookAt = new Vector3(0, 10, 20);
+                localCamera = new Vector3(0, 3, -10);
+                localLookAt = new Vector3(0, 5, 10);
             }
 
 
