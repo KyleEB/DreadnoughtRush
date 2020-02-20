@@ -4,18 +4,18 @@ namespace DreadnoughtRush
 {
     class KeyboardInputController : InputController
     {
-  
+
 
         private bool isKeyDown(Keys key)
         {
             return Keyboard.GetState().IsKeyDown(key);
-        } 
+        }
 
         public override bool shouldExit()
         {
             return isKeyDown(Keys.Escape);
         }
-        
+
         public override bool changePerspective()
         {
             return isKeyDown(Keys.P);
@@ -28,7 +28,7 @@ namespace DreadnoughtRush
 
         public override bool forwardThrust()
         {
-           return isKeyDown(Keys.W);
+            return isKeyDown(Keys.W);
         }
 
         public override bool backwardThrust()
@@ -66,11 +66,5 @@ namespace DreadnoughtRush
             return isKeyDown(Keys.A);
         }
 
-        public override bool AngularDampeners()
-        {
-            return isKeyDown(Keys.LeftShift);
-        }
     }
-
-    
 }

@@ -1,12 +1,17 @@
-﻿using BEPUphysics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace DreadnoughtRush
 {
     internal class Ship : GameObject
     {
+
+        float YawScalar = 1;
+        float PitchScalar = 1;
+        float RollScalar = 1;
+        float ForwardThrustScalar = 1;
+        float BackwardThrustScalar = 1;
+
         public Ship(Game game) : base(game)
         {
         }
@@ -25,9 +30,12 @@ namespace DreadnoughtRush
 
         public Ship(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum, Vector3 angMomentum) : base(game, pos, id, mass, linMomentum, angMomentum)
         {
-            physicsObject.AngularDamping = 0.5f;
-            physicsObject.LinearDamping = 0.5f;
+            physicsObject.AngularDamping = 0.0f;
+            physicsObject.LinearDamping = 0.0f;
         }
+
+
+
 
         /// <summary>
         /// Apply forward thrust at the center of our ship, this means we are pushing it forward.
@@ -35,7 +43,7 @@ namespace DreadnoughtRush
         /// <param name="dt">Amount of time passed in seconds, scales the power of the thrust.</param>
         public void ApplyForwardThrust(float dt)
         {
-            Vector3 direction = new Vector3(0, 0, 1);
+            Vector3 direction = new Vector3(0, 0, ForwardThrustScalar);
             ApplyThrust(direction, Vector3.Zero, dt); 
         }
 
@@ -45,62 +53,52 @@ namespace DreadnoughtRush
         /// <param name="dt">Amount of time passed in seconds, scales the power of the thrust.</param>
         public void ApplyBackwardThrust(float dt)
         {
-            Vector3 direction = new Vector3(0, 0, -1);
+            Vector3 direction = new Vector3(0, 0, - BackwardThrustScalar);
             ApplyThrust(direction, Vector3.Zero, dt);
         }
 
         public void ApplyPositiveYawThrust(float dt)
         {
-            Vector3 direction = new Vector3(-1, 0, 0);
-            Vector3 localPosition = new Vector3(1, 0, 0);
+            Vector3 direction = new Vector3(- 1, 0, 0);
+            Vector3 localPosition = new Vector3(0, 0, YawScalar);
             ApplyThrust(direction, localPosition, dt);
         }
 
         public void ApplyNegativeYawThrust(float dt)
         {
             Vector3 direction = new Vector3(1, 0, 0);
-            Vector3 localPostion = new Vector3(1, 0, 0);
+            Vector3 localPostion = new Vector3(0, 0, YawScalar);
             ApplyThrust(direction, localPostion, dt);
         }
 
         public void ApplyPositivePitchThrust(float dt)
         {
             Vector3 direction = new Vector3(0, 1, 0);
-            Vector3 localPosition = new Vector3(0, 0, 1);
+            Vector3 localPosition = new Vector3(0, 0, PitchScalar);
             ApplyThrust(direction, localPosition, dt);
         }
 
         public void ApplyNegativePitchThrust(float dt)
         {
             Vector3 direction = new Vector3(0, -1, 0);
-            Vector3 localPostion = new Vector3(0, 0, 1);
+            Vector3 localPostion = new Vector3(0, 0, PitchScalar);
             ApplyThrust(direction, localPostion, dt);
         }
 
         public void ApplyPositiveRollThrust(float dt)
         {
             Vector3 direction =     new Vector3(0, -1, 0);
-            Vector3 localPosition = new Vector3(-10, 0, 0);
+            Vector3 localPosition = new Vector3(- RollScalar, 0, 0);
             ApplyThrust(direction, localPosition, dt);
             ApplyThrust(-direction, -localPosition, dt);
         }
 
         public void ApplyNegativeRollThrust(float dt)
         {
-            Vector3 direction =    new Vector3(0, -1, 0);
-            Vector3 localPosition = new Vector3(10, 0, 0);
+            Vector3 direction =    new Vector3(0, 1, 0);
+            Vector3 localPosition = new Vector3(- RollScalar, 0, 0);
             ApplyThrust(direction, localPosition, dt);
             ApplyThrust(-direction, -localPosition, dt);
-        }
-
-        public void ApplyAngularDampeners()
-        {
-            physicsObject.AngularDamping = 1.5f;
-        }
-
-        public void ReleaseAngularDampeners()
-        {
-            physicsObject.AngularDamping = 0.5f;
         }
 
         /// <summary>
@@ -128,7 +126,7 @@ namespace DreadnoughtRush
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>("spaceship");
-            physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius;
+            physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius / 2;
 
             base.LoadContent();
         }

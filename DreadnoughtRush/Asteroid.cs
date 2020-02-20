@@ -33,7 +33,7 @@ namespace DreadnoughtRush
 
         protected override void LoadContent()
         {
-            model = Game.Content.Load<Model>("LargeAsteroid");
+            model = Game.Content.Load<Model>("mine");
             physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius;
 
             base.LoadContent();

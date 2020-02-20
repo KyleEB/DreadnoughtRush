@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System;
 
 namespace DreadnoughtRush
 {
@@ -54,14 +54,36 @@ namespace DreadnoughtRush
             // that represents the asteroid.
 
 
-            Vector3 AsteroidPos = new Vector3(0, 0, 10);
+            Vector3 AsteroidPos = new Vector3(-250, -250, -250);
             string AsteroidId = "Asteroid";
             float AsteroidMass = 3f;
             Vector3 AsteroidLinearMomentum = new Vector3(0f, 0f, 0f);
             Vector3 AsteroidAngularMomentum = new Vector3(0f, 0f, 0f);
 
+            Random random = new Random();
 
-            asteroid = new Asteroid(this, AsteroidPos, AsteroidId, AsteroidMass, AsteroidLinearMomentum, AsteroidAngularMomentum);
+            int asteroidCount = 1000;
+            for(int i = 0; i < asteroidCount; i++)
+            {
+                float xPos = asteroidCount * (float)random.NextDouble();
+                float yPos = asteroidCount * (float)random.NextDouble();
+                float zPos = asteroidCount * (float)random.NextDouble();
+
+                float xRotate = 5 * (float)random.NextDouble() - 5;
+                float yRotate = 5 * (float)random.NextDouble() - 5;
+                float zRotate = 5 * (float)random.NextDouble() - 5;
+
+                float xLinear = 10 * (float)random.NextDouble() - 10;
+                float yLinear = 10 * (float)random.NextDouble() - 10;
+                float zLinear = 10 * (float)random.NextDouble() - 10;
+
+                Vector3 randomPosition = new Vector3(xPos, yPos, zPos);
+                Vector3 randomRotation = new Vector3(xRotate, yRotate, zRotate);
+                Vector3 randomLinear = new Vector3(xLinear, yLinear, zLinear);
+
+
+                new Asteroid(this, AsteroidPos + randomPosition, AsteroidId, AsteroidMass, AsteroidLinearMomentum + randomLinear, AsteroidAngularMomentum + randomRotation);
+            }
 
 
             PlayerShip = InitializePlayer();
@@ -100,7 +122,7 @@ namespace DreadnoughtRush
             float aspectRatio = GraphicsDevice.Viewport.AspectRatio;
             float fieldOfView = MathHelper.PiOver4;
             float nearClipPlane = 1;
-            float farClipPlane = 200;
+            float farClipPlane = 2000;
 
             Matrix Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearClipPlane, farClipPlane);
 
@@ -160,7 +182,43 @@ namespace DreadnoughtRush
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            PlayerControllerEvents(gameTime);
+            
+            Services.GetService<Space>().Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            UpdateChaseObject(PlayerShip);
 
+            base.Update(gameTime);
+        }
+
+        private void toggleOrientationLock(GameTime gameTime)
+        {
+            if (FirstPersonToggleTimeout < 0)
+            {
+                CameraRotationLocked = !CameraRotationLocked;
+                FirstPersonToggleTimeout = 1;
+            }
+            else
+            {
+                FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
+            }
+        }
+
+        private void togglePerspective(GameTime gameTime)
+        {
+            if (FirstPersonToggleTimeout < 0)
+            {
+                FirstPerson = !FirstPerson;
+                FirstPersonToggleTimeout = 1;
+            }
+            else
+            {
+                FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
+            }
+        }
+
+
+        private void PlayerControllerEvents(GameTime gameTime)
+        {
             if (Controller.shouldExit())
                 Exit();
 
@@ -195,7 +253,7 @@ namespace DreadnoughtRush
                 PlayerShip.ApplyNegativeYawThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
-            if(Controller.PostivePitchThrust())
+            if (Controller.PostivePitchThrust())
             {
                 PlayerShip.ApplyPositivePitchThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
@@ -215,47 +273,6 @@ namespace DreadnoughtRush
                 PlayerShip.ApplyNegativeRollThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
-            if (Controller.AngularDampeners())
-            {
-                PlayerShip.ApplyAngularDampeners();
-            } else
-            {
-                PlayerShip.ReleaseAngularDampeners();
-            }
-
-
-
-
-            Services.GetService<Space>().Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            UpdateChaseObject(PlayerShip);
-
-            base.Update(gameTime);
-        }
-
-        private void toggleOrientationLock(GameTime gameTime)
-        {
-            if (FirstPersonToggleTimeout < 0)
-            {
-                CameraRotationLocked = !CameraRotationLocked;
-                FirstPersonToggleTimeout = 1;
-            }
-            else
-            {
-                FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
-            }
-        }
-
-        private void togglePerspective(GameTime gameTime)
-        {
-            if (FirstPersonToggleTimeout < 0)
-            {
-                FirstPerson = !FirstPerson;
-                FirstPersonToggleTimeout = 1;
-            }
-            else
-            {
-                FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
-            }
         }
 
         /// <summary>
