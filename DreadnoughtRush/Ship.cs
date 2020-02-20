@@ -30,8 +30,8 @@ namespace DreadnoughtRush
 
         public Ship(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum, Vector3 angMomentum) : base(game, pos, id, mass, linMomentum, angMomentum)
         {
-            physicsObject.AngularDamping = 0.0f;
-            physicsObject.LinearDamping = 0.0f;
+           // physicsObject.AngularDamping = 0.0f; //Only needed if dampening on the ship is needed.
+           // physicsObject.LinearDamping = 0.0f;
         }
 
 
@@ -87,7 +87,7 @@ namespace DreadnoughtRush
 
         public void ApplyPositiveRollThrust(float dt)
         {
-            Vector3 direction =     new Vector3(0, -1, 0);
+            Vector3 direction = new Vector3(0, -1, 0);
             Vector3 localPosition = new Vector3(- RollScalar, 0, 0);
             ApplyThrust(direction, localPosition, dt);
             ApplyThrust(-direction, -localPosition, dt);
@@ -113,7 +113,6 @@ namespace DreadnoughtRush
             Vector3 worldDirection = Vector3.Transform(Direction, RotationMatrix);
 
             physicsObject.ApplyImpulse(ConversionHelper.MathConverter.Convert(worldPosition), ConversionHelper.MathConverter.Convert(worldDirection));
-        
         }
 
 

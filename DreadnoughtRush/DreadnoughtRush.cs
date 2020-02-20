@@ -120,7 +120,7 @@ namespace DreadnoughtRush
         private void SetupCamera()
         {
             float aspectRatio = GraphicsDevice.Viewport.AspectRatio;
-            float fieldOfView = MathHelper.PiOver4;
+            float fieldOfView = MathHelper.PiOver2; //90 degree fov
             float nearClipPlane = 1;
             float farClipPlane = 2000;
 
@@ -140,11 +140,11 @@ namespace DreadnoughtRush
 
             if (FirstPerson) {
                 localCamera = new Vector3(0, 2, 0);
-                localLookAt = new Vector3(0, 1, 10);
+                localLookAt = new Vector3(0, 3, 10);
             } else
             {
-                localCamera = new Vector3(0, 2, -20);
-                localLookAt = new Vector3(0, 1, 10);
+                localCamera = new Vector3(0, 10, -20);
+                localLookAt = new Vector3(0, 10, 20);
             }
 
 
