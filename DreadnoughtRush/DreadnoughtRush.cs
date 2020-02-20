@@ -20,11 +20,7 @@ namespace DreadnoughtRush
 
         InputController Controller = new KeyboardInputController();
 
-        private bool FirstPerson = false;
 
-        private double FirstPersonToggleTimeout = 1;
-
-        private bool CameraRotationLocked = false;
 
         public DreadnoughtRush()
         {
@@ -136,7 +132,7 @@ namespace DreadnoughtRush
             Vector3 localCamera;
             Vector3 localLookAt;
 
-            if (FirstPerson) {
+            if (camera.isFirstPerson) {
                 localCamera = new Vector3(0, 2, 0);
                 localLookAt = new Vector3(0, 3, 10);
             } else
@@ -153,7 +149,7 @@ namespace DreadnoughtRush
 
             camera.ViewDirection = ConversionHelper.MathConverter.Convert(worldLookAt) - camera.Position;
 
-            if (CameraRotationLocked)
+            if (camera.isCameraRotationLocked)
             {
                 camera.LockedUp = ConversionHelper.MathConverter.Convert(Vector3.Transform(Vector3.Up, chase.RotationMatrix));
             }
@@ -180,7 +176,8 @@ namespace DreadnoughtRush
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            PlayerControllerEvents(gameTime);
+            Camera camera = Services.GetService<Camera>();
+            PlayerControllerEvents(gameTime, camera);
             
             Services.GetService<Space>().Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             UpdateChaseObject(PlayerShip);
@@ -188,47 +185,23 @@ namespace DreadnoughtRush
             base.Update(gameTime);
         }
 
-        private void toggleOrientationLock(GameTime gameTime)
-        {
-            if (FirstPersonToggleTimeout < 0)
-            {
-                CameraRotationLocked = !CameraRotationLocked;
-                FirstPersonToggleTimeout = 1;
-            }
-            else
-            {
-                FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
-            }
-        }
-
-        private void togglePerspective(GameTime gameTime)
-        {
-            if (FirstPersonToggleTimeout < 0)
-            {
-                FirstPerson = !FirstPerson;
-                FirstPersonToggleTimeout = 1;
-            }
-            else
-            {
-                FirstPersonToggleTimeout -= gameTime.ElapsedGameTime.TotalSeconds;
-            }
-        }
+        
 
 
-        private void PlayerControllerEvents(GameTime gameTime)
+        private void PlayerControllerEvents(GameTime gameTime, Camera camera)
         {
             if (Controller.shouldExit())
                 Exit();
 
             if (Controller.changePerspective())
             {
-                togglePerspective(gameTime);
+                camera.togglePerspective((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             }
 
             if (Controller.lockOrientation())
             {
-                toggleOrientationLock(gameTime);
+                camera.toggleOrientationLock((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             if (Controller.forwardThrust())

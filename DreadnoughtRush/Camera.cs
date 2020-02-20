@@ -5,10 +5,25 @@ namespace DreadnoughtRush
 {
     /// <summary>
     /// Simple camera class from the BePu Physics Archive.
+    /// Ive also modified some aspects to create a camera with third/first person abilities.
     /// Source: https://github.com/bepu/bepuphysics1/tree/master/BEPUphysicsDemos
     /// </summary>
     public class Camera
     {
+        private bool firstPerson = false;
+
+        private bool cameraRotationLocked = false;
+
+        public bool isFirstPerson { get { return firstPerson; } }
+
+        public bool isCameraRotationLocked { get { return cameraRotationLocked; } }
+
+        private float FirstPersonToggleTimeout = 1;
+
+        private float OrientationToggleTimeout = 1;
+
+        
+
         /// <summary>
         /// Gets or sets the position of the camera.
         /// </summary>
@@ -194,6 +209,29 @@ namespace DreadnoughtRush
 
             //Avoid drift by renormalizing.
             viewDirection.Normalize();
+        }
+
+        private void toggle(ref bool toBeToggle, float holdTime, ref float toggleTimeout)
+        {
+            if (toggleTimeout < 0)
+            {
+                toBeToggle = !toBeToggle;
+                toggleTimeout = 1;
+            }
+            else
+            {
+                toggleTimeout -= holdTime;
+            }
+        }
+
+        public void toggleOrientationLock(float holdTime)
+        {
+                toggle(ref cameraRotationLocked, holdTime, ref OrientationToggleTimeout);
+        }
+
+        public void togglePerspective(float  holdTime)
+        {
+            toggle(ref firstPerson, holdTime, ref FirstPersonToggleTimeout);
         }
 
 
