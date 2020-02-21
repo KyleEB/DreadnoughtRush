@@ -103,7 +103,6 @@ namespace DreadnoughtRush
                
                 effect.PreferPerPixelLighting = true;
 
-
                 effect.World = this.TranformationMatrix;
 
                 effect.View = ConversionHelper.MathConverter.Convert(camera.ViewMatrix);

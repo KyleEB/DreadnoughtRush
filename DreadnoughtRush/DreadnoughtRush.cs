@@ -206,42 +206,42 @@ namespace DreadnoughtRush
 
             if (Controller.forwardThrust())
             {
-                PlayerShip.ApplyForwardThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+                PlayerShip.Movement.ApplyForwardThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             if (Controller.backwardThrust())
             {
-                PlayerShip.ApplyBackwardThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+                PlayerShip.Movement.ApplyBackwardThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             if (Controller.PositiveYawThrust())
             {
-                PlayerShip.ApplyPositiveYawThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+                PlayerShip.Movement.ApplyPositiveYawThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             if (Controller.NegativeYawThrust())
             {
-                PlayerShip.ApplyNegativeYawThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+                PlayerShip.Movement.ApplyNegativeYawThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             if (Controller.PostivePitchThrust())
             {
-                PlayerShip.ApplyPositivePitchThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+                PlayerShip.Movement.ApplyPositivePitchThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             if (Controller.NegativePitchThrust())
             {
-                PlayerShip.ApplyNegativePitchThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+                PlayerShip.Movement.ApplyNegativePitchThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             if (Controller.PositiveRollThrust())
             {
-                PlayerShip.ApplyPositiveRollThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+                PlayerShip.Movement.ApplyPositiveRollThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             if (Controller.NegativeRollThrust())
             {
-                PlayerShip.ApplyNegativeRollThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
+                PlayerShip.Movement.ApplyNegativeRollThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
         }
