@@ -14,6 +14,7 @@ namespace DreadnoughtRush
         public abstract bool NegativePitchThrust();
         public abstract bool PositiveRollThrust();
         public abstract bool NegativeRollThrust();
+        public abstract bool FireTorpedo();
     }
 
     class Bindings

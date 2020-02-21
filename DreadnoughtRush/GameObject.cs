@@ -25,10 +25,10 @@ namespace DreadnoughtRush
         
         public BEPUphysics.Entities.Prefabs.Sphere physicsObject;
 
-        public BEPUphysics.Entities.Entity entity => physicsObject;
+        public BEPUphysics.Entities.Entity Entity => physicsObject;
 
         /// <summary>
-        /// Third Person Point of View Camera that represents the Camera that resides behind the PlayerShip. 
+        /// Camera that represents the Camera that resides behind the PlayerShip. 
         /// </summary>
         
         protected static Camera camera;
@@ -45,7 +45,6 @@ namespace DreadnoughtRush
 
         public Matrix TranformationMatrix => ConversionHelper.MathConverter.Convert(physicsObject.BufferedStates.InterpolatedStates.WorldTransform);
 
-        public BEPUphysics.Entities.Entity Entity => physicsObject;
 
 
         public GameObject(Game game) : base(game)

@@ -91,32 +91,26 @@ namespace DreadnoughtRush
             Vector3 worldPosition = Vector3.Transform(LocalPosition, Target.TranformationMatrix);
             Vector3 worldDirection = Vector3.Transform(Direction, Target.RotationMatrix);
 
-            Target.entity.ApplyImpulse(ConversionHelper.MathConverter.Convert(worldPosition), ConversionHelper.MathConverter.Convert(worldDirection));
+            Target.Entity.ApplyImpulse(ConversionHelper.MathConverter.Convert(worldPosition), ConversionHelper.MathConverter.Convert(worldDirection));
         }
     }
 
     class ThrustScalars
     {
 
-        float yawScalar;
-        float pitchScalar;
-        float rollScalar;
-        float forwardThrustScalar;
-        float backwardThrustScalar;
-
-        public float YawScalar => yawScalar;
-        public float PitchScalar => pitchScalar;
-        public float RollScalar => rollScalar;
-        public float ForwardThrustScalar => forwardThrustScalar;
-        public float BackwardThrustScalar => backwardThrustScalar;
+        public float YawScalar { get; private set; }
+        public float PitchScalar { get; private set; }
+        public float RollScalar { get; private set; }
+        public float ForwardThrustScalar { get; private set; }
+        public float BackwardThrustScalar { get; private set; }
 
         public ThrustScalars(float yawScalar, float pitchScalar, float rollScalar, float forwardThrustScalar,float backwardThrustScalar)
         {
-            this.yawScalar = yawScalar;
-            this.pitchScalar = pitchScalar;
-            this.rollScalar = rollScalar;
-            this.forwardThrustScalar = forwardThrustScalar;
-            this.backwardThrustScalar = backwardThrustScalar;
+            YawScalar = yawScalar;
+            PitchScalar = pitchScalar;
+            RollScalar = rollScalar;
+            ForwardThrustScalar = forwardThrustScalar;
+            BackwardThrustScalar = backwardThrustScalar;
         }
     }
 }

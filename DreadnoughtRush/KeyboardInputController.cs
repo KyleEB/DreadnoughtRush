@@ -66,5 +66,10 @@ namespace DreadnoughtRush
             return isKeyDown(Keys.A);
         }
 
+        public override bool FireTorpedo()
+        {
+            return isKeyDown(Keys.Space);
+        }
+
     }
 }

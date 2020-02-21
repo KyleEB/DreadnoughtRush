@@ -36,7 +36,7 @@ namespace DreadnoughtRush
 
         protected override void Events_InitialCollisionDetected(BEPUphysics.BroadPhaseEntries.MobileCollidables.EntityCollidable sender, BEPUphysics.BroadPhaseEntries.Collidable other, BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair)
         {
-            if (other == Trigger.entity.CollisionInformation )
+            if (other == Trigger.Entity.CollisionInformation )
             {
                 physicsObject.Space.Remove(physicsObject);
                 Visible = false;

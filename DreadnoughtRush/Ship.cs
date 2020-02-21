@@ -1,15 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace DreadnoughtRush
 {
     internal class Ship : GameObject
     {
 
-        ThrustScalars thrusterScalars;
+        protected ThrustScalars thrusterScalars;
         public ThrustMovement Movement;
 
-       
+
+        public int AmmoCount { get; private set; }
 
         public Ship(Game game) : base(game)
         {
@@ -34,6 +36,7 @@ namespace DreadnoughtRush
             float RollScalar = 4;
             float ForwardThrustScalar = 4;
             float BackwardThrustScalar = 2;
+            AmmoCount = 5;
             thrusterScalars = new ThrustScalars(YawScalar, PitchScalar, RollScalar, ForwardThrustScalar, BackwardThrustScalar);
             Movement = new ThrustMovement(this, thrusterScalars);
         }
@@ -62,6 +65,23 @@ namespace DreadnoughtRush
             base.Draw(gameTime);
         }
 
-        
+        public void FireATorpedo()
+        {
+            if (AmmoCount > 0 || true)
+            {
+                Vector3 torpedoLinear =  Vector3.Zero;
+                Vector3 torpedoAngular = Vector3.Zero;
+                Vector3 firedFromPos = Vector3.Transform(new Vector3(0, -1, 10), TranformationMatrix);
+
+                AmmoCount -= 1;
+                Torpedo fired = new Torpedo(this.Game, firedFromPos, "Torpedo", 1, torpedoLinear, torpedoAngular);
+
+                fired.Entity.Orientation = this.Entity.Orientation;
+                fired.Movement.ApplyForwardThrust(1);
+            }
+        }
+
+
+
     }
 }

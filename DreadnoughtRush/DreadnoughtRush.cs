@@ -244,6 +244,11 @@ namespace DreadnoughtRush
                 PlayerShip.Movement.ApplyNegativeRollThrust((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
+            if (Controller.FireTorpedo())
+            {
+                PlayerShip.FireATorpedo();
+            }
+
         }
 
         /// <summary>

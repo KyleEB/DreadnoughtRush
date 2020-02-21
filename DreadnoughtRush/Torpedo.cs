@@ -3,44 +3,37 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DreadnoughtRush
 {
-    internal class Torpepdo : Ship
+    internal class Torpedo : GameObject
     {
-        GameObject Trigger;
-        GameObject Source;
 
+        protected ThrustScalars thrusterScalars;
+        public ThrustMovement Movement;
 
-        public Torpepdo(Game game) : base(game)
+        public Torpedo(Game game) : base(game)
         {
         }
 
-        public Torpepdo(Game game, Vector3 pos, string id) : base(game, pos, id)
+        public Torpedo(Game game, Vector3 pos, string id) : base(game, pos, id)
         {
         }
 
-        public Torpepdo(Game game, Vector3 pos, string id, float mass) : base(game, pos, id, mass)
+        public Torpedo(Game game, Vector3 pos, string id, float mass) : base(game, pos, id, mass)
         {
         }
 
-        public Torpepdo(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum) : base(game, pos, id, mass, linMomentum)
+        public Torpedo(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum) : base(game, pos, id, mass, linMomentum)
         {
         }
 
-        public Torpepdo(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum, Vector3 angMomentum) : base(game, pos, id, mass, linMomentum, angMomentum)
+        public Torpedo(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum, Vector3 angMomentum) : base(game, pos, id, mass, linMomentum, angMomentum)
         {
-        }
-
-        public Torpepdo(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum, Vector3 angMomentum, GameObject trigger) : this(game, pos, id, mass, linMomentum, angMomentum)
-        {
-            this.Trigger = trigger;
-        }
-
-        protected override void Events_InitialCollisionDetected(BEPUphysics.BroadPhaseEntries.MobileCollidables.EntityCollidable sender, BEPUphysics.BroadPhaseEntries.Collidable other, BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair)
-        {
-            if (other == Trigger.entity.CollisionInformation)
-            {
-                physicsObject.Space.Remove(physicsObject);
-                Visible = false;
-            }
+            float YawScalar = 0;
+            float PitchScalar = 0;
+            float RollScalar = 0;
+            float ForwardThrustScalar = 100;
+            float BackwardThrustScalar = 0;
+            thrusterScalars = new ThrustScalars(YawScalar, PitchScalar, RollScalar, ForwardThrustScalar, BackwardThrustScalar);
+            Movement = new ThrustMovement(this, thrusterScalars);
         }
 
 
@@ -52,7 +45,7 @@ namespace DreadnoughtRush
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>("torpedo");
-            physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius;
+            //physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius;
 
             base.LoadContent();
         }
@@ -66,5 +59,7 @@ namespace DreadnoughtRush
             }
             base.Draw(gameTime);
         }
+
+
     }
 }
