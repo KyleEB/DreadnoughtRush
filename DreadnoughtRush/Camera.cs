@@ -226,7 +226,7 @@ namespace DreadnoughtRush
 
         public void toggleOrientationLock(float holdTime)
         {
-                toggle(ref cameraRotationLocked, holdTime, ref OrientationToggleTimeout);
+            toggle(ref cameraRotationLocked, holdTime, ref OrientationToggleTimeout);
         }
 
         public void togglePerspective(float  holdTime)
