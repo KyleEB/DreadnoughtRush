@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace DreadnoughtRush
 {
@@ -8,6 +9,8 @@ namespace DreadnoughtRush
 
         protected ThrustScalars thrusterScalars;
         public ThrustMovement Movement;
+
+        private double lifeTime = 20;
 
         public Torpedo(Game game) : base(game)
         {
@@ -62,11 +65,22 @@ namespace DreadnoughtRush
 
         public override void Draw(GameTime gameTime)
         {
-            foreach (var mesh in model.Meshes)
+            Random rand = new Random();
+            lifeTime -= gameTime.ElapsedGameTime.TotalSeconds;
+            if (lifeTime > 0)
             {
-                DrawMeshToCamera(mesh);
+                new FireParticle(this.Game, Vector3.Transform(new Vector3(2 * (float)rand.NextDouble() - 1, 2 * (float)rand.NextDouble() - 1, -.5f), TranformationMatrix), "fireParticle", 1f, ConversionHelper.MathConverter.Convert(this.Entity.LinearMomentum / 10));
+                foreach (var mesh in model.Meshes)
+                {
+                    DrawMeshToCamera(mesh);
+                }
+                base.Draw(gameTime);
             }
-            base.Draw(gameTime);
+            else
+            {
+                physicsObject.Space.Remove(physicsObject);
+                Visible = false;
+            }
         }
 
 

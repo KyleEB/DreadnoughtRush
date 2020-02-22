@@ -16,7 +16,6 @@ namespace DreadnoughtRush
         SpriteBatch spriteBatch;
 
         Ship PlayerShip;
-        Asteroid [] AsteroidField;
 
         InputController Controller = new KeyboardInputController();
 
@@ -39,7 +38,6 @@ namespace DreadnoughtRush
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
 
             // Make our BEPU Physics space a service
             Services.AddService<Space>(new Space());
@@ -47,7 +45,7 @@ namespace DreadnoughtRush
             float AsteroidFieldDensityFactor = 4f;
             
             PlayerShip = InitializePlayer();
-            AsteroidField = Asteroid.CreateAsteroidField(this, 5000, AsteroidFieldDensityFactor);
+            Asteroid.CreateAsteroidField(this, 5000, AsteroidFieldDensityFactor);
 
             base.Initialize();
         }

@@ -93,7 +93,7 @@ namespace DreadnoughtRush
             base.UnloadContent();
         }
 
-        protected void DrawMeshToCamera(ModelMesh mesh)
+        protected virtual void DrawMeshToCamera(ModelMesh mesh)
         {
             camera = Game.Services.GetService<Camera>();
             foreach (BasicEffect effect in mesh.Effects)

@@ -43,12 +43,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Asteroid.cs" />
+    <Compile Include="BrokenAsteroidParticle.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="ConversionHelper.cs" />
     <Compile Include="DreadnoughtRush.cs" />
+    <Compile Include="FireParticle.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="InputController.cs" />
     <Compile Include="KeyboardInputController.cs" />
+    <Compile Include="Particle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
