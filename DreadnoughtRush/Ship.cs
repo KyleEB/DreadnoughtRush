@@ -9,8 +9,9 @@ namespace DreadnoughtRush
 
         protected ThrustScalars thrusterScalars;
         public ThrustMovement Movement;
-
-
+        protected float fireRate;
+        protected float firingSideOffset; 
+        protected float firingForce; 
         public int AmmoCount { get; private set; }
 
         public Ship(Game game) : base(game)
@@ -36,9 +37,16 @@ namespace DreadnoughtRush
             float RollScalar = 4;
             float ForwardThrustScalar = 4;
             float BackwardThrustScalar = 2;
-            AmmoCount = 5;
+
+            fireRate = 0.5f;
+            firingSideOffset = 0;
+            firingForce = 10;
+
+            AmmoCount = 20;
             thrusterScalars = new ThrustScalars(YawScalar, PitchScalar, RollScalar, ForwardThrustScalar, BackwardThrustScalar);
             Movement = new ThrustMovement(this, thrusterScalars);
+            this.physicsObject.LinearDamping = 0.3f;
+            this.physicsObject.AngularDamping = 0.3f;
         }
 
 
@@ -65,19 +73,30 @@ namespace DreadnoughtRush
             base.Draw(gameTime);
         }
 
-        public void FireATorpedo()
+        public void FireATorpedo(float dt)
         {
-            if (AmmoCount > 0 || true)
+            if (fireRate > 0)
             {
-                Vector3 torpedoLinear =  Vector3.Zero;
-                Vector3 torpedoAngular = Vector3.Zero;
-                Vector3 firedFromPos = Vector3.Transform(new Vector3(0, -1, 10), TranformationMatrix);
+                fireRate -= dt;
+            }
+            else
+            {
+                fireRate = 1;
+                if (AmmoCount > 0)
+                {
+                    firingSideOffset *= -1;
 
-                AmmoCount -= 1;
-                Torpedo fired = new Torpedo(this.Game, firedFromPos, "Torpedo", 1, torpedoLinear, torpedoAngular);
+                    float torpedoMass = 0.5f;
+                    Vector3 torpedoLinear = ConversionHelper.MathConverter.Convert(firingForce * Entity.WorldTransform.Forward + Entity.LinearVelocity);
+                    Vector3 torpedoAngular = Vector3.Zero; 
+                    Vector3 firedFromPos = Vector3.Transform(new Vector3(firingSideOffset, -2f, 10), TranformationMatrix);
 
-                fired.Entity.Orientation = this.Entity.Orientation;
-                fired.Movement.ApplyForwardThrust(1);
+                    AmmoCount -= 1;
+                    Torpedo fired = new Torpedo(this.Game, firedFromPos, "Torpedo", torpedoMass, torpedoLinear, torpedoAngular);
+
+                    fired.Entity.Orientation = this.Entity.Orientation;
+                    fired.Movement.ApplyForwardThrust(firingForce);
+                }
             }
         }
 

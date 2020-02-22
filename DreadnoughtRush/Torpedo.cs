@@ -34,6 +34,16 @@ namespace DreadnoughtRush
             float BackwardThrustScalar = 0;
             thrusterScalars = new ThrustScalars(YawScalar, PitchScalar, RollScalar, ForwardThrustScalar, BackwardThrustScalar);
             Movement = new ThrustMovement(this, thrusterScalars);
+            physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius; //had to move the radius set here as it was throwing null errors in load content.
+        }
+
+        protected override void Events_InitialCollisionDetected(BEPUphysics.BroadPhaseEntries.MobileCollidables.EntityCollidable sender, BEPUphysics.BroadPhaseEntries.Collidable other, BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair)
+        {
+            if (other != null && other.Tag.ToString().StartsWith("Asteroid"))
+            {
+                physicsObject.Space.Remove(physicsObject);
+                Visible = false;
+            }
         }
 
 
@@ -45,8 +55,7 @@ namespace DreadnoughtRush
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>("torpedo");
-            //physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius;
-
+ 
             base.LoadContent();
         }
 

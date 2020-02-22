@@ -58,6 +58,7 @@ namespace DreadnoughtRush
             physicsObject.AngularDamping = 0f;
             physicsObject.LinearDamping = 0f;
             physicsObject.CollisionInformation.Events.InitialCollisionDetected += Events_InitialCollisionDetected;
+            physicsObject.CollisionInformation.Tag = id;
             physicsObject.Tag = id;
             Game.Services.GetService<Space>().Add(physicsObject);
         }
