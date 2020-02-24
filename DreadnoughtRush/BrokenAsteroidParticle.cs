@@ -15,15 +15,7 @@ namespace DreadnoughtRush
         {
         }
 
-        public BrokenAsteroidParticle(Game game, Vector3 pos, string id, float mass) : base(game, pos, id, mass)
-        {
-        }
-
         public BrokenAsteroidParticle(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum) : base(game, pos, id, mass, linMomentum)
-        {
-        }
-
-        public BrokenAsteroidParticle(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum, Vector3 angMomentum) : base(game, pos, id, mass, linMomentum, angMomentum)
         {
         }
 
