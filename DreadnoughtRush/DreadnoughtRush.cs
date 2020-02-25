@@ -42,10 +42,10 @@ namespace DreadnoughtRush
             // Make our BEPU Physics space a service
             Services.AddService<Space>(new Space());
 
-            float AsteroidFieldDensityFactor = 4f;
+            float AsteroidFieldDensityFactor = 1f;
             
             PlayerShip = InitializePlayer();
-            Asteroid.CreateAsteroidField(this, 5000, AsteroidFieldDensityFactor);
+            Asteroid.CreateAsteroidField(this, 500, AsteroidFieldDensityFactor);
 
             base.Initialize();
         }

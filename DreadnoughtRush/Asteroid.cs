@@ -48,10 +48,17 @@ namespace DreadnoughtRush
                     physicsObject.Space.Remove(physicsObject);
                     Visible = false;
                 }
-                if (tempTag.Equals("Torpedo"))
+
+                if (tempTag.Equals("Torpedo") || tempTag.Equals("Player"))
                 {
                     BrokenAsteroidParticle.CreateParticleBoom(this.Game, CurrentPosition, 20, 40);
                 }
+
+                if (tempTag.StartsWith("Asteroid"))
+                {
+                    BrokenAsteroidParticle.CreateParticleBoom(this.Game, CurrentPosition, 5, 5);
+                }
+
             }
         }
 

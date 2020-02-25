@@ -90,7 +90,7 @@ namespace DreadnoughtRush
             Vector3 worldPosition = Vector3.Transform(LocalPosition, Target.TranformationMatrix);
             Vector3 worldDirection = Vector3.Transform(Direction, Target.RotationMatrix);
 
-            new FireParticle(this.Target.Game, worldPosition - worldDirection, "fireParticle", 1f, Direction );
+           new FireParticle(this.Target.Game, worldPosition - worldDirection, "fireParticle", 1f, Direction );
             Target.Entity.ApplyImpulse(ConversionHelper.MathConverter.Convert(worldPosition), ConversionHelper.MathConverter.Convert(worldDirection));
         }
     }
