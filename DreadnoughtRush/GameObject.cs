@@ -99,11 +99,11 @@ namespace DreadnoughtRush
             foreach (BasicEffect effect in mesh.Effects)
             {
                 effect.Alpha = 1f;
-                
-                effect.EnableDefaultLighting();
-               
-                effect.PreferPerPixelLighting = true;
+                               
+               // effect.EnableDefaultLighting();
 
+                effect.PreferPerPixelLighting = true;
+                
                 effect.World = this.TranformationMatrix;
 
                 effect.View = ConversionHelper.MathConverter.Convert(camera.ViewMatrix);

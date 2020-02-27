@@ -1,13 +1,6 @@
-﻿using BEPUphysics.BroadPhaseEntries;
-using BEPUphysics.BroadPhaseEntries.MobileCollidables;
-using BEPUphysics.NarrowPhaseSystems.Pairs;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DreadnoughtRush
 {
@@ -48,11 +41,6 @@ namespace DreadnoughtRush
             physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius;
 
             base.LoadContent();
-        }
-
-        protected override void UnloadContent()
-        {
-            base.UnloadContent();
         }
     }
 }
