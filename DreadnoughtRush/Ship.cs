@@ -50,11 +50,6 @@ namespace DreadnoughtRush
         }
 
 
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>("spaceship");

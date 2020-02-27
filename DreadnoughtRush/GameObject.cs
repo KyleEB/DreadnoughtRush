@@ -99,6 +99,7 @@ namespace DreadnoughtRush
             foreach (BasicEffect effect in mesh.Effects)
             {
                 effect.Alpha = 1f;
+                
                 effect.EnableDefaultLighting();
                
                 effect.PreferPerPixelLighting = true;

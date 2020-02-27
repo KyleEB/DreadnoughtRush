@@ -16,6 +16,7 @@ namespace DreadnoughtRush
         SpriteBatch spriteBatch;
 
         Ship PlayerShip;
+        MotherShip Mothership;
 
         InputController Controller = new KeyboardInputController();
 
@@ -45,6 +46,7 @@ namespace DreadnoughtRush
             float AsteroidFieldDensityFactor = 1f;
             
             PlayerShip = InitializePlayer();
+            Mothership = InitializeMothership(); 
             Asteroid.CreateAsteroidField(this, 500, AsteroidFieldDensityFactor);
 
             base.Initialize();
@@ -60,6 +62,17 @@ namespace DreadnoughtRush
             Vector3 PlayerAngularMomentum = new Vector3(0f, 0f, 0f);
 
             return new Ship(this, PlayerPos, PlayerId, PlayerMass, PlayerLinearMomentum, PlayerAngularMomentum);
+        }
+
+        private MotherShip InitializeMothership()
+        {
+            Vector3 MothershipPos = new Vector3(10f, 0f, -5f);
+            string MothershipId = "Mothership";
+            float MothershipMass = 3f;
+            Vector3 MothershipLinearMomentum = new Vector3(2f, 0f, 0f);
+            Vector3 MothershipAngularMomentum = new Vector3(0f, 0f, 0f);
+
+            return new MotherShip(this, MothershipPos, MothershipId, MothershipMass, MothershipLinearMomentum, MothershipAngularMomentum);
         }
 
         
