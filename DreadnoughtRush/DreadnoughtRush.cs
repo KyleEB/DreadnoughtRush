@@ -1,8 +1,6 @@
 ﻿using BEPUphysics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace DreadnoughtRush
 {
@@ -47,7 +45,7 @@ namespace DreadnoughtRush
             
             PlayerShip = InitializePlayer();
             Mothership = InitializeMothership(); 
-            Asteroid.CreateAsteroidField(this, 2000, AsteroidFieldDensityFactor);
+            Asteroid.CreateAsteroidField(this, 1000, AsteroidFieldDensityFactor);
 
             new Skybox(this);
 

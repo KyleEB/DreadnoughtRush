@@ -52,7 +52,7 @@ namespace DreadnoughtRush
 
             foreach (BasicEffect effect in mesh.Effects)
             {
-                effect.Alpha = 0.5f;
+                effect.Alpha = 1f;
 
                 //effect.EnableDefaultLighting();
 
