@@ -37,8 +37,8 @@ namespace DreadnoughtRush
 
         protected override void LoadContent()
         {
-            model = Game.Content.Load<Model>("mothership");
-            physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius;
+            model = Game.Content.Load<Model>("dreadnought");
+            physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius / 10;
 
             base.LoadContent();
         }

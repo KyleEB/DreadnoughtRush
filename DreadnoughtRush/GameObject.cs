@@ -100,7 +100,7 @@ namespace DreadnoughtRush
             {
                 effect.Alpha = 1f;
                                
-               // effect.EnableDefaultLighting();
+                effect.EnableDefaultLighting();
 
                 effect.PreferPerPixelLighting = true;
                 
