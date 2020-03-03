@@ -53,7 +53,7 @@ namespace DreadnoughtRush
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>("spaceship");
-            physicsObject.Radius = model.Meshes[0].BoundingSphere.Radius / 2;
+            ((BEPUphysics.Entities.Prefabs.Sphere)physicsObject).Radius = model.Meshes[0].BoundingSphere.Radius / 2;
 
             base.LoadContent();
         }

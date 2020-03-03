@@ -45,7 +45,7 @@ namespace DreadnoughtRush
             
             PlayerShip = InitializePlayer();
             Mothership = InitializeMothership(); 
-            Asteroid.CreateAsteroidField(this, 1000, AsteroidFieldDensityFactor);
+            Asteroid.CreateAsteroidField(this, 500, AsteroidFieldDensityFactor);
 
             new Skybox(this);
 
@@ -66,7 +66,7 @@ namespace DreadnoughtRush
 
         private MotherShip InitializeMothership()
         {
-            Vector3 MothershipPos = new Vector3(10f, 0f, -5f);
+            Vector3 MothershipPos = new Vector3(10f, 10f, -5f);
             string MothershipId = "Mothership";
             float MothershipMass = 3f;
             Vector3 MothershipLinearMomentum = new Vector3(2f, 0f, 0f);

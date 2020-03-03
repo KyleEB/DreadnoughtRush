@@ -23,7 +23,7 @@ namespace DreadnoughtRush
         /// This couples BePu and monogame together.
         /// </summary>
         
-        public BEPUphysics.Entities.Prefabs.Sphere physicsObject;
+        public BEPUphysics.Entities.Entity physicsObject;
 
         public BEPUphysics.Entities.Entity Entity => physicsObject;
 
