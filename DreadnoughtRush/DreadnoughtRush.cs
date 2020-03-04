@@ -45,6 +45,8 @@ namespace DreadnoughtRush
 
             new Skybox(this);
 
+            SetupCamera();
+
             base.Initialize();
         }
 
@@ -69,19 +71,6 @@ namespace DreadnoughtRush
             Vector3 MothershipAngularMomentum = new Vector3(0f, 0f, 0f);
 
             return new MotherShip(this, MothershipPos, MothershipId, MothershipMass, MothershipLinearMomentum, MothershipAngularMomentum);
-        }
-
-        
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            SetupCamera();
         }
 
         private void SetupCamera()
@@ -132,13 +121,6 @@ namespace DreadnoughtRush
               
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-        }
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,

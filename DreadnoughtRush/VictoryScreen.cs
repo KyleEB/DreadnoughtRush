@@ -5,7 +5,9 @@ namespace DreadnoughtRush
 {
     internal class VictoryScreen : DrawableGameComponent
     {
-        SpriteBatch spritebatch;
+        SpriteBatch spriteBatch;
+        string displayText;
+
         public VictoryScreen(Game game) : base(game)
         {
             game.Components.Add(this);
@@ -13,7 +15,6 @@ namespace DreadnoughtRush
 
         public override void Draw(GameTime gameTime)
         {
-
             base.Draw(gameTime);
         }
 
