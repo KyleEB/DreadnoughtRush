@@ -11,14 +11,11 @@ namespace DreadnoughtRush
     public class DreadnoughtRush : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
 
         Ship PlayerShip;
         MotherShip Mothership;
 
         InputController Controller = new KeyboardInputController();
-
-
 
         public DreadnoughtRush()
         {
@@ -37,7 +34,6 @@ namespace DreadnoughtRush
         /// </summary>
         protected override void Initialize()
         {
-
             // Make our BEPU Physics space a service
             Services.AddService<Space>(new Space());
 
@@ -98,11 +94,9 @@ namespace DreadnoughtRush
             Matrix Projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearClipPlane, farClipPlane);
 
             Services.AddService<Camera>(new Camera(ConversionHelper.MathConverter.Convert(Vector3.Zero), 0f, 0f, ConversionHelper.MathConverter.Convert(Projection)));
-
-            UpdateChaseObject(PlayerShip);
         }
 
-        private void UpdateChaseObject(Ship chase)
+        private void UpdateChaseObject(GameObject chase)
         {
             Camera camera = Services.GetService<Camera>();
 

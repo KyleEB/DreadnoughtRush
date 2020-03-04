@@ -51,7 +51,6 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="InputController.cs" />
     <Compile Include="KeyboardInputController.cs" />
-    <Compile Include="ModelDataExtractor.cs" />
     <Compile Include="MotherShip.cs" />
     <Compile Include="Particle.cs" />
     <Compile Include="Program.cs" />
@@ -60,6 +59,7 @@
     <Compile Include="Skybox.cs" />
     <Compile Include="ThrustMovement.cs" />
     <Compile Include="Torpedo.cs" />
+    <Compile Include="VictoryScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BEPUphysics, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
