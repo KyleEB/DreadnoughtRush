@@ -39,6 +39,7 @@ namespace DreadnoughtRush
             if (tempTag.Equals("Player"))
             {
                 hasPlayerReached = true;
+                new VictoryScreen(this.Game);
             }
         }
 

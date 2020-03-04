@@ -53,7 +53,7 @@ namespace DreadnoughtRush
 
         private Ship InitializePlayer()
         {
-            Vector3 PlayerPos = new Vector3(0f, -1f, -5f);
+            Vector3 PlayerPos = new Vector3(0f, 0f, 0f);
             string PlayerId = "Player";
             float PlayerMass = 3f;
             Vector3 PlayerLinearMomentum = new Vector3(0f, 0f, 2f);
@@ -64,7 +64,7 @@ namespace DreadnoughtRush
 
         private MotherShip InitializeMothership()
         {
-            Vector3 MothershipPos = new Vector3(10f, 10f, -5f);
+            Vector3 MothershipPos = new Vector3(0f, 0f, -100f);
             string MothershipId = "Mothership";
             float MothershipMass = 3f;
             Vector3 MothershipLinearMomentum = new Vector3(2f, 0f, 0f);

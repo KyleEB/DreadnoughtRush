@@ -56,6 +56,13 @@
 /processorParam:TextureFormat=Color
 /build:brokenAsteroidTexture.png
 
+#begin displayText.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:displayText.spritefont
+
 #begin dreadnought.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
