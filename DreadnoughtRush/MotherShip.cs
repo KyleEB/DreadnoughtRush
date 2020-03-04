@@ -38,17 +38,7 @@ namespace DreadnoughtRush
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>("dreadnought");
-            int[] indices;
-            BEPUutilities.Vector3[] vertices;
-            ModelDataExtractor.GetVerticesAndIndicesFromModel(model, out vertices, out indices);
-
-            BEPUutilities.AffineTransform transform = new BEPUutilities.AffineTransform(Entity.WorldTransform.Translation);
-            BEPUphysics.Entities.Prefabs.MobileMesh modelMesh = new BEPUphysics.Entities.Prefabs.MobileMesh(vertices, indices, transform, BEPUphysics.CollisionShapes.MobileMeshSolidity.DoubleSided, 100f);
-
-            modelMesh.OrientationMatrix = physicsObject.OrientationMatrix;
-            physicsObject = modelMesh;
-
-            Game.Services.GetService<BEPUphysics.Space>().Add(physicsObject);
+            ((BEPUphysics.Entities.Prefabs.Sphere)physicsObject).Radius = model.Meshes[0].BoundingSphere.Radius;
             base.LoadContent();
         }
     }
