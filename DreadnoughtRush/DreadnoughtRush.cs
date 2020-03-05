@@ -37,11 +37,11 @@ namespace DreadnoughtRush
             // Make our BEPU Physics space a service
             Services.AddService<Space>(new Space());
 
-            float AsteroidFieldDensityFactor = 2f;
+            float AsteroidFieldDensityFactor = 1f;
             
             PlayerShip = InitializePlayer();
             Mothership = InitializeMothership(); 
-            Asteroid.CreateAsteroidField(this, 500, AsteroidFieldDensityFactor);
+            Asteroid.CreateAsteroidField(this, 1000, AsteroidFieldDensityFactor);
 
             new Skybox(this);
 
@@ -64,7 +64,7 @@ namespace DreadnoughtRush
 
         private MotherShip InitializeMothership()
         {
-            Vector3 MothershipPos = new Vector3(0f, 0f, -100f);
+            Vector3 MothershipPos = new Vector3(100f, 0f, 50f);
             string MothershipId = "Mothership";
             float MothershipMass = 3f;
             Vector3 MothershipLinearMomentum = new Vector3(2f, 0f, 0f);
