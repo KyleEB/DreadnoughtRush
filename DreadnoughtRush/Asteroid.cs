@@ -32,10 +32,17 @@ namespace DreadnoughtRush
         {
         }
 
+        /// <summary>
+        /// Collision event thrower for when an Asteroid hits another entity in the bepu space.
+        /// </summary>
+        /// <param name="sender">The object that threw the event</param>
+        /// <param name="other">The other object that collided with the sender</param>
+        /// <param name="pair">A pair denoting the two objects in the narrow phase system</param>
         protected override void Events_InitialCollisionDetected(BEPUphysics.BroadPhaseEntries.MobileCollidables.EntityCollidable sender, BEPUphysics.BroadPhaseEntries.Collidable other, BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair)
         {
             string tempTag = string.Empty;
 
+            //check what the sender hit by checking the tag of other, if its not null then it should have a special action.
             if(other != null && other.Tag != null)
             {
                 tempTag = other.Tag.ToString();
@@ -43,9 +50,9 @@ namespace DreadnoughtRush
 
             if(tempTag.Equals("Player") || tempTag.Equals("Torpedo") || tempTag.StartsWith("Asteroid"))
             {
-                if (physicsObject.Space != null)
+                if (entity.Space != null)
                 {
-                    physicsObject.Space.Remove(physicsObject);
+                    entity.Space.Remove(entity);
                     Visible = false;
                 }
 
@@ -62,28 +69,12 @@ namespace DreadnoughtRush
             }
         }
 
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         protected override void LoadContent()
         {
-            model = Game.Content.Load<Model>("mine");
-            ((BEPUphysics.Entities.Prefabs.Sphere) physicsObject).Radius = model.Meshes[0].BoundingSphere.Radius;
+            model = Game.Content.Load<Model>("mine"); //it says mine because I haven't renamed the blender model, the mine is a voxel-esque asteroid
+            ((BEPUphysics.Entities.Prefabs.Sphere) entity).Radius = model.Meshes[0].BoundingSphere.Radius;
 
             base.LoadContent();
-        }
-
-
-        public override void Draw(GameTime gameTime)
-        {
-            foreach (var mesh in model.Meshes)
-            {
-                DrawMeshToCamera(mesh);
-            }
-            base.Draw(gameTime);
         }
 
         public static Asteroid[] CreateAsteroidField(Game game, int asteroidCount, float densityFactor)

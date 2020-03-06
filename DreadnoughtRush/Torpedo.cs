@@ -37,52 +37,40 @@ namespace DreadnoughtRush
             float BackwardThrustScalar = 0;
             thrusterScalars = new ThrustScalars(YawScalar, PitchScalar, RollScalar, ForwardThrustScalar, BackwardThrustScalar);
             Movement = new ThrustMovement(this, thrusterScalars);
-            ((BEPUphysics.Entities.Prefabs.Sphere)physicsObject).Radius = model.Meshes[0].BoundingSphere.Radius; //had to move the radius set here as it was throwing null errors in load content.
+            ((BEPUphysics.Entities.Prefabs.Sphere)entity).Radius = model.Meshes[0].BoundingSphere.Radius;//had to move the radius set here as it was throwing null errors in load content.
         }
 
         protected override void Events_InitialCollisionDetected(BEPUphysics.BroadPhaseEntries.MobileCollidables.EntityCollidable sender, BEPUphysics.BroadPhaseEntries.Collidable other, BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair)
         {
             if (other != null && other.Tag.ToString().StartsWith("Asteroid"))
             {
-                physicsObject.Space.Remove(physicsObject);
+                entity.Space.Remove(entity);
                 Visible = false;
             }
-        }
-
-
-        public override void Initialize()
-        {
-            base.Initialize();
         }
 
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>("torpedo");
- 
             base.LoadContent();
         }
 
-
-        public override void Draw(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             Random rand = new Random();
-            lifeTime -= gameTime.ElapsedGameTime.TotalSeconds;
+            
             if (lifeTime > 0)
             {
-                new FireParticle(this.Game, Vector3.Transform(new Vector3(2 * (float)rand.NextDouble() - 1, 2 * (float)rand.NextDouble() - 1, -.5f), TranformationMatrix), "fireParticle", 1f, ConversionHelper.MathConverter.Convert(this.Entity.LinearMomentum / 10));
-                foreach (var mesh in model.Meshes)
-                {
-                    DrawMeshToCamera(mesh);
-                }
-                base.Draw(gameTime);
+                lifeTime -= gameTime.ElapsedGameTime.TotalSeconds;
+                new FireParticle(this.Game, Vector3.Transform(new Vector3(2 * (float)rand.NextDouble() - 1, 2 * (float)rand.NextDouble() - 1, -.5f), TranformationMatrix), "fireParticle", 1f, ConversionHelper.MathConverter.Convert(entity.LinearMomentum / 10));
             }
             else
             {
-                physicsObject.Space.Remove(physicsObject);
+                entity.Space.Remove(entity);
                 Visible = false;
             }
+            base.Update(gameTime);
         }
-
 
     }
 }

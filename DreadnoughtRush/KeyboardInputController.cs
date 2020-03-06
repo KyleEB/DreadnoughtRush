@@ -4,8 +4,6 @@ namespace DreadnoughtRush
 {
     class KeyboardInputController : InputController
     {
-
-
         private bool isKeyDown(Keys key)
         {
             return Keyboard.GetState().IsKeyDown(key);

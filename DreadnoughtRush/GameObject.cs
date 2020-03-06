@@ -13,7 +13,7 @@ namespace DreadnoughtRush
         protected Model model;
 
         /// <summary>
-        /// If not using an fbx the texture will need to be imported.
+        /// If not using an fbx with a texture the texture will need to be imported.
         /// </summary> 
         
         protected Texture2D texture;
@@ -22,10 +22,8 @@ namespace DreadnoughtRush
         /// BePu Physics entity for the model that will be added to the static space of DreadnoughtRush.
         /// This couples BePu and monogame together.
         /// </summary>
-        
-        public BEPUphysics.Entities.Entity physicsObject;
 
-        public BEPUphysics.Entities.Entity Entity => physicsObject;
+        public BEPUphysics.Entities.Entity entity;
 
         /// <summary>
         /// Camera that represents the Camera that resides behind the PlayerShip. 
@@ -36,14 +34,14 @@ namespace DreadnoughtRush
         /// <summary>
         /// Getter that converts the Bepu Vector 3 position of the BePu Entity returned as a XNA Vector 3
         /// </summary>
-        public Vector3 CurrentPosition => ConversionHelper.MathConverter.Convert(physicsObject.BufferedStates.InterpolatedStates.Position);
+        public Vector3 CurrentPosition => ConversionHelper.MathConverter.Convert(entity.BufferedStates.InterpolatedStates.Position);
 
         /// <summary>
         /// Getter that converts the Bepu Matrix3x3 orientation of the BePu Entity returned as a XNA Matrix
         /// </summary>
-        public Matrix RotationMatrix => ConversionHelper.MathConverter.Convert(physicsObject.BufferedStates.InterpolatedStates.OrientationMatrix);
+        public Matrix RotationMatrix => ConversionHelper.MathConverter.Convert(entity.BufferedStates.InterpolatedStates.OrientationMatrix);
 
-        public Matrix TranformationMatrix => ConversionHelper.MathConverter.Convert(physicsObject.BufferedStates.InterpolatedStates.WorldTransform);
+        public Matrix TranformationMatrix => ConversionHelper.MathConverter.Convert(entity.BufferedStates.InterpolatedStates.WorldTransform);
 
 
 
@@ -54,43 +52,32 @@ namespace DreadnoughtRush
 
         public GameObject(Game game, Vector3 pos, string id) : this(game)
         {
-            physicsObject = new BEPUphysics.Entities.Prefabs.Sphere(ConversionHelper.MathConverter.Convert(pos), 1);
-            physicsObject.AngularDamping = 0f;
-            physicsObject.LinearDamping = 0f;
-            physicsObject.CollisionInformation.Events.InitialCollisionDetected += Events_InitialCollisionDetected;
-            physicsObject.CollisionInformation.Tag = id;
-            physicsObject.Tag = id;
-            Game.Services.GetService<Space>().Add(physicsObject);
+            entity = new BEPUphysics.Entities.Prefabs.Sphere(ConversionHelper.MathConverter.Convert(pos), 1);
+            entity.AngularDamping = 0f;
+            entity.LinearDamping = 0f;
+            entity.CollisionInformation.Events.InitialCollisionDetected += Events_InitialCollisionDetected;
+            entity.CollisionInformation.Tag = id;
+            entity.Tag = id;
+            Game.Services.GetService<Space>().Add(entity);
         }
 
         protected virtual void Events_InitialCollisionDetected(BEPUphysics.BroadPhaseEntries.MobileCollidables.EntityCollidable sender, BEPUphysics.BroadPhaseEntries.Collidable other, BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair)
         {
-            int i = 0;
         }
 
         public GameObject(Game game, Vector3 pos, string id, float mass) : this(game, pos, id)
         {
-            physicsObject.Mass = mass;
+            entity.Mass = mass;
         }
 
         public GameObject(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum) : this(game, pos, id, mass)
         {
-            physicsObject.LinearMomentum = ConversionHelper.MathConverter.Convert(linMomentum);
+            entity.LinearMomentum = ConversionHelper.MathConverter.Convert(linMomentum);
         }
 
         public GameObject(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum, Vector3 angMomentum) : this(game, pos, id, mass, linMomentum)
         {
-            physicsObject.AngularMomentum = ConversionHelper.MathConverter.Convert(angMomentum);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        protected override void UnloadContent()
-        {
-            base.UnloadContent();
+            entity.AngularMomentum = ConversionHelper.MathConverter.Convert(angMomentum);
         }
 
         protected virtual void DrawMeshToCamera(ModelMesh mesh)
@@ -113,5 +100,13 @@ namespace DreadnoughtRush
             mesh.Draw();
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            foreach (var mesh in model.Meshes)
+            {
+                DrawMeshToCamera(mesh);
+            }
+            base.Draw(gameTime);
+        }
     }
 }

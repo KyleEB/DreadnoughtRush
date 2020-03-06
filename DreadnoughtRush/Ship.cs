@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
-namespace DreadnoughtRush
+namespace DreadnoughtRush
 {
     internal class Ship : GameObject
     {
@@ -44,27 +43,17 @@ namespace DreadnoughtRush
             AmmoCount = 20;
             thrusterScalars = new ThrustScalars(YawScalar, PitchScalar, RollScalar, ForwardThrustScalar, BackwardThrustScalar);
             Movement = new ThrustMovement(this, thrusterScalars);
-            this.physicsObject.LinearDamping = 0.3f;
-            this.physicsObject.AngularDamping = 0.3f;
+            entity.LinearDamping = 0.3f;
+            entity.AngularDamping = 0.3f;
         }
 
 
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>("spaceship");
-            ((BEPUphysics.Entities.Prefabs.Sphere)physicsObject).Radius = model.Meshes[0].BoundingSphere.Radius / 2;
+            ((BEPUphysics.Entities.Prefabs.Sphere)entity).Radius = model.Meshes[0].BoundingSphere.Radius / 2;
 
             base.LoadContent();
-        }
-
-
-        public override void Draw(GameTime gameTime)
-        {
-            foreach (var mesh in model.Meshes)
-            {
-                DrawMeshToCamera(mesh);
-            }
-            base.Draw(gameTime);
         }
 
         public void FireATorpedo(float dt)
@@ -81,14 +70,14 @@ namespace DreadnoughtRush
                     firingSideOffset *= -1;
 
                     float torpedoMass = 0.5f;
-                    Vector3 torpedoLinear = ConversionHelper.MathConverter.Convert(firingForce * Entity.WorldTransform.Forward + Entity.LinearVelocity);
+                    Vector3 torpedoLinear = ConversionHelper.MathConverter.Convert(firingForce * entity.WorldTransform.Forward + entity.LinearVelocity);
                     Vector3 torpedoAngular = Vector3.Zero; 
                     Vector3 firedFromPos = Vector3.Transform(new Vector3(firingSideOffset, -2f, 10), TranformationMatrix);
 
                     AmmoCount -= 1;
                     Torpedo fired = new Torpedo(this.Game, firedFromPos, "Torpedo", torpedoMass, torpedoLinear, torpedoAngular);
 
-                    fired.Entity.Orientation = this.Entity.Orientation;
+                    fired.entity.Orientation = this.entity.Orientation;
                     fired.Movement.ApplyForwardThrust(firingForce);
                 }
             }

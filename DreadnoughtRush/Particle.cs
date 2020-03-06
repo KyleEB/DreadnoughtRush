@@ -15,12 +15,12 @@ namespace DreadnoughtRush
 
         public Particle(Game game, Vector3 pos, string id) : base(game, pos, id)
         {
-            physicsObject.CollisionInformation.CollisionRules.Personal = BEPUphysics.CollisionRuleManagement.CollisionRule.NoSolver; //do nothing with collisions
+            entity.CollisionInformation.CollisionRules.Personal = BEPUphysics.CollisionRuleManagement.CollisionRule.NoSolver; //do nothing with collisions
         }
 
         public Particle(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum) : base(game, pos, id, mass, linMomentum)
         {
-            physicsObject.CollisionInformation.CollisionRules.Personal = BEPUphysics.CollisionRuleManagement.CollisionRule.NoSolver; //do nothing with collisions
+            entity.CollisionInformation.CollisionRules.Personal = BEPUphysics.CollisionRuleManagement.CollisionRule.NoSolver; //do nothing with collisions
         }
 
         public override void Initialize()
@@ -43,8 +43,8 @@ namespace DreadnoughtRush
             }
             else
             {
-                this.physicsObject.Space.Remove(this.physicsObject);
-                this.Visible = false;
+                entity.Space.Remove(entity);
+                Visible = false;
             }
         }
 

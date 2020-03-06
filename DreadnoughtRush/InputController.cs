@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Input;
-namespace DreadnoughtRush
+﻿namespace DreadnoughtRush
 {
     abstract class InputController
     {
@@ -15,7 +14,10 @@ namespace DreadnoughtRush
         public abstract bool PositiveRollThrust();
         public abstract bool NegativeRollThrust();
         public abstract bool FireTorpedo();
+
     }
+
+
 
     class Bindings
     {

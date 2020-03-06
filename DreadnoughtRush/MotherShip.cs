@@ -43,19 +43,10 @@ namespace DreadnoughtRush
             }
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            foreach (var mesh in model.Meshes)
-            {
-                DrawMeshToCamera(mesh);
-            }
-            base.Draw(gameTime);
-        }
-
         protected override void LoadContent()
         {
             model = Game.Content.Load<Model>("dreadnought");
-            ((BEPUphysics.Entities.Prefabs.Sphere)physicsObject).Radius = model.Meshes[0].BoundingSphere.Radius;
+            ((BEPUphysics.Entities.Prefabs.Sphere)entity).Radius = model.Meshes[0].BoundingSphere.Radius;
             base.LoadContent();
         }
     }

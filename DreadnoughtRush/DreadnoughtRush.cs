@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace DreadnoughtRush
 {
     /// <summary>
-    /// This is the main type for your game.
+    /// General setup for the game is all done here, as it specifies the initial playing field for the player.
     /// </summary>
 
     public class DreadnoughtRush : Game
@@ -14,9 +14,13 @@ namespace DreadnoughtRush
 
         Ship PlayerShip;
         MotherShip Mothership;
+        Skybox skybox;
 
         InputController Controller = new KeyboardInputController();
 
+        /// <summary>
+        /// Setup the default viewport for the game.
+        /// </summary>
         public DreadnoughtRush()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,52 +31,58 @@ namespace DreadnoughtRush
         }
 
         /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
+        /// Setup the Player, Mothership, and asteroid fields for the game.
+        /// Also Sets default properties for the Game's Camera
         /// </summary>
         protected override void Initialize()
         {
-            // Make our BEPU Physics space a service
             Services.AddService<Space>(new Space());
 
-            float AsteroidFieldDensityFactor = 1f;
+            float AsteroidFieldDensityFactor = 1f; //how packed the asteroid field should be, higher means closer asteroids, lower means more spread out
             
             PlayerShip = InitializePlayer();
-            Mothership = InitializeMothership(); 
+            Mothership = InitializeMothership();
             Asteroid.CreateAsteroidField(this, 1000, AsteroidFieldDensityFactor);
-
-            new Skybox(this);
+            skybox = new Skybox(this);
 
             SetupCamera();
 
             base.Initialize();
         }
 
-
+        /// <summary>
+        /// Setup default player by creating a new player ship.
+        /// </summary>
+        /// <returns></returns>
         private Ship InitializePlayer()
         {
-            Vector3 PlayerPos = new Vector3(0f, 0f, 0f);
-            string PlayerId = "Player";
+            Vector3 PlayerPos = new Vector3(0f, 0f, 0f); //spawn at origin
+            string PlayerId = "Player";//tag for collisions
             float PlayerMass = 3f;
-            Vector3 PlayerLinearMomentum = new Vector3(0f, 0f, 2f);
-            Vector3 PlayerAngularMomentum = new Vector3(0f, 0f, 0f);
+            Vector3 PlayerLinearMomentum = Vector3.Zero; 
+            Vector3 PlayerAngularMomentum = Vector3.Zero; //no inital forces
 
             return new Ship(this, PlayerPos, PlayerId, PlayerMass, PlayerLinearMomentum, PlayerAngularMomentum);
         }
 
+        /// <summary>
+        /// Setup default mothership by creating a new mothership.
+        /// </summary>
+        /// <returns></returns>
         private MotherShip InitializeMothership()
         {
-            Vector3 MothershipPos = new Vector3(100f, 0f, 50f);
-            string MothershipId = "Mothership";
-            float MothershipMass = 3f;
-            Vector3 MothershipLinearMomentum = new Vector3(2f, 0f, 0f);
+            Vector3 MothershipPos = new Vector3(100f, 0f, 50f); //set it generally in front of the player
+            string MothershipId = "Mothership";//tag for collisions
+            float MothershipMass = 100f;
+            Vector3 MothershipLinearMomentum = new Vector3(2f, 0f, 0f); //give it a little push to start off
             Vector3 MothershipAngularMomentum = new Vector3(0f, 0f, 0f);
 
             return new MotherShip(this, MothershipPos, MothershipId, MothershipMass, MothershipLinearMomentum, MothershipAngularMomentum);
         }
 
+        /// <summary>
+        /// Setup default camera view that will be used to follow the player ship.
+        /// </summary>
         private void SetupCamera()
         {
             float aspectRatio = GraphicsDevice.Viewport.AspectRatio;
@@ -85,6 +95,10 @@ namespace DreadnoughtRush
             Services.AddService<Camera>(new Camera(ConversionHelper.MathConverter.Convert(Vector3.Zero), 0f, 0f, ConversionHelper.MathConverter.Convert(Projection)));
         }
 
+        /// <summary>
+        /// Make the camera be either in a first person or third person view based on the given GameObject
+        /// </summary>
+        /// <param name="chase">The GameObject to follow</param>
         private void UpdateChaseObject(GameObject chase)
         {
             Camera camera = Services.GetService<Camera>();
@@ -123,8 +137,9 @@ namespace DreadnoughtRush
 
 
         /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
+        /// Update BEPU Physics space
+        /// Update inputs from the player
+        /// Update the GameObject the camera is currently chasing
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
@@ -140,7 +155,11 @@ namespace DreadnoughtRush
 
         
 
-
+        /// <summary>
+        /// Handle player inputs from the Controller
+        /// </summary>
+        /// <param name="gameTime">A snapshot of the current time</param>
+        /// <param name="camera">The current camera that represents the player's view</param>
         private void PlayerControllerEvents(GameTime gameTime, Camera camera)
         {
             if (Controller.shouldExit())
