@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-namespace DreadnoughtRush
+
+namespace DreadnoughtRush
 {
     internal class Ship : GameObject
     {

@@ -66,7 +66,7 @@ namespace DreadnoughtRush
             }
             else
             {
-                entity.Space.Remove(entity);
+                entity.Space?.Remove(entity);
                 Visible = false;
             }
             base.Update(gameTime);
