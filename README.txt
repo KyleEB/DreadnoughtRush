@@ -16,12 +16,14 @@ Spacebar: Hold to fire a single torpedo, currently a max of 20 torpedos can be f
 P: Hold for 1 second to toggle into first-person, hold for 1 second again to toggle out
 O: Hold for 1 second to lock the camera's orientation onto the player's orientation, hold for 1 second again to toggle out
 
-Goal: The current mothership is the big orange and blue triangle, once the player hits it a victory message pops up.
+Goal: 
+The current mothership is the big orange and blue triangle, once the player hits it a victory message pops up.
 
-Assets: All the assets were hand created by myself, hence why the skybox is terrible, but that's for a latter day to fix.
+Assets: 
+All the assets were hand created by myself except for the skybox. The link for that is here: http://wwwtyro.github.io/space-3d
 
-
-Time Spent: I kept a journal of how long I worked on the project and what I worked on in the time.
+Time Spent: 
+I kept a journal of how long I worked on the project and what I worked on in the time.
 
 Overall I spent 85 hours on the assignment to reach it's current state.
 
