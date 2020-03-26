@@ -14,7 +14,7 @@ namespace DreadnoughtRush
         /// The size of the cube, used so that we can resize the box
         /// for different sized environments.
         /// </summary>
-        private float size = 500f;
+        private float size = 2000f;
 
         /// <summary>
         /// Creates a new skybox

@@ -45,6 +45,7 @@ namespace DreadnoughtRush
             if (other != null && other.Tag.ToString().StartsWith("Asteroid"))
             {
                 entity.Space.Remove(entity);
+                lifeTime = 0;
                 Visible = false;
             }
         }

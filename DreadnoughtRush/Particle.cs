@@ -7,7 +7,7 @@ namespace DreadnoughtRush
     internal class Particle : GameObject
     {
         public double LifeTime = 1;
-
+        
         public Particle(Game game) : base(game)
         {
             

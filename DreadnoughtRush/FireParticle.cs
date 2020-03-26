@@ -18,6 +18,11 @@ namespace DreadnoughtRush
         {
         }
 
+        public FireParticle(Game game, Vector3 pos, string id, float mass, Vector3 linMomentum, double lifetime) : base(game, pos, id, mass, linMomentum)
+        {
+            LifeTime = lifetime;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
