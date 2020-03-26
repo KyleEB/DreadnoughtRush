@@ -14,7 +14,7 @@ namespace DreadnoughtRush
         /// The size of the cube, used so that we can resize the box
         /// for different sized environments.
         /// </summary>
-        private float size = 10f;
+        private float size = 500f;
 
         /// <summary>
         /// Creates a new skybox
@@ -23,7 +23,7 @@ namespace DreadnoughtRush
         public Skybox(Game game) : base(game)
         {
             game.Components.Add(this);
-            model = Game.Content.Load<Model>("skybox");
+            model = Game.Content.Load<Model>("skyBoxRedo");
         }
 
         public override void Initialize()
