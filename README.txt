@@ -29,7 +29,7 @@ Overall I spent 85 hours on the assignment to reach it's current state.
 
 What is currently done:
 Goal Message
-Dynamic Steering
+Dynamic Steering (lots of impulse forces!)
 Torpedos
 Asteroid Generation
 Asteroid Special Collisions with torpedo and the player.
